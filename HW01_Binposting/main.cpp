@@ -6,7 +6,7 @@ void calc(int* arr, int size){
     std::cout << "Enter a reference point: ";
     std::cin >> left;
     std::cout << "The number of elements in the array greater than " << left << ": ";
-    for (int i = 1; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         if (arr[i] > left) {
             c++;
         }
