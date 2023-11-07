@@ -1,48 +1,33 @@
-#include <iostream>
-
-void append_to_dynamic_array(int* arr, int& logical_size, int actual_size) {
+void append_to_dynamic_array(int*& arr, int& logical_size, int& actual_size) {
     if (logical_size >= actual_size) {
-        std::cout << "Array is full" << std::endl;
-        return;
-    }
+        int new_size = actual_size * 2;
+        int* new_arr = new int[new_size];
 
-    std::cout << "Enter new element: ";
-    int new_element;
-    std::cin >> new_element;
+        for (int j = 0; j < logical_size; ++j) {
+            new_arr[j] = arr[j];
+        }
+        // Удалять новый массив здесь не нужно
+        delete[] arr;
+        arr = new_arr;
+        actual_size = new_size;
 
-    arr[logical_size] = new_element;
-    logical_size++;
-}
+        while (true) {
+            std::cout << "\nEnter new element or X for exit: ";
+            int new_element;
+            std::cin >> new_element;
+            if (new_element == 'x') {
+                break;
+            }
 
-void print(int* arr, int logical_size, int actual_size) {
-    for (int i = 0; i < logical_size; i++) {
-        std::cout << arr[i] << ' ';
-    }
-    if (logical_size < actual_size) {
-        for (int j = logical_size; j < actual_size; j++) {
-            std::cout << "_ ";
+            arr[logical_size] = new_element;
+            logical_size++;
+
+            for (int i = 0; i < logical_size; i++) {
+                std::cout << arr[i] << ' ';
+            }
+            for (int j = logical_size; j < actual_size; j++) {
+                std::cout << "_ ";
+            }
         }
     }
-}
-
-int main() {
-    int actual_size;
-    int logical_size;
-    std::cout << "Enter actual size: ";
-    std::cin >> actual_size;
-    std::cout << "Enter logical size: ";
-    std::cin >> logical_size;
-
-    int* array1 = new int[actual_size]; // Создаем фактический массив
-
-    if (logical_size > actual_size) {
-        std::cout << "Logical size is bigger than actual size!";
-    } else {
-        print(array1, logical_size, actual_size);
-        append_to_dynamic_array(array1, logical_size, actual_size);
-        print(array1, logical_size, actual_size);
-    }
-
-    delete[] array1;
-    return 0;
 }
